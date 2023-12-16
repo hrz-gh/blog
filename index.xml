@@ -2,11 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>hrz on 痴呆ing</title>
-    <link>https://hrz-gh.github.io/blog/</link>
+    <link>https://mostiray.gitee.io/blog/</link>
     <description>Recent content in hrz on 痴呆ing</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     
-    <lastBuildDate>Mon, 13 Jun 2022 20:55:37 +0100</lastBuildDate><atom:link href="https://hrz-gh.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 16 Dec 2023 16:15:30 +0800</lastBuildDate><atom:link href="https://mostiray.gitee.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hugo &#43; Github 部署静态博客</title>
+      <link>https://mostiray.gitee.io/blog/posts/hugo-&#43;-github-%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</link>
+      <pubDate>Sat, 16 Dec 2023 16:15:30 +0800</pubDate>
+      
+      <guid>https://mostiray.gitee.io/blog/posts/hugo-&#43;-github-%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</guid>
+      <description>PS：越来越废物了，不每周记点东西，迟早要痴呆，第一篇就随手记下搭建过程</description>
+      
+    </item>
+    
   </channel>
 </rss>
