@@ -1,12 +1,32 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on 痴呆ing</title>
+    <title>Posts on 混日子ing</title>
     <link>https://hrz-gh.github.io/blog/posts/</link>
-    <description>Recent content in Posts on 痴呆ing</description>
+    <description>Recent content in Posts on 混日子ing</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     
     <lastBuildDate>Mon, 13 Jun 2022 20:55:37 +0100</lastBuildDate><atom:link href="https://hrz-gh.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>远程环境搭建</title>
+      <link>https://hrz-gh.github.io/blog/posts/%E8%BF%9C%E7%A8%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</link>
+      <pubDate>Sat, 23 Dec 2023 16:59:34 +0800</pubDate>
+      
+      <guid>https://hrz-gh.github.io/blog/posts/%E8%BF%9C%E7%A8%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</guid>
+      <description>在踩完wsl2，mac mini的坑后，搞了一个ubuntu的mini主机，作为编译与部署服务器，由于桌面空间有限，只接网线与电源，日常使用ssh与samba就够用了，不过某些应用需要在图形界面下进行测试，专门购入一个毫米波的无线触屏显示器，无奈干扰和发热严重，最后还是选择使用远程桌面（在这个万物互联理念都推出了这么久了，还在用最古老的方法。。。心累</description>
+      
+    </item>
+    
+    <item>
+      <title>Hugo &#43; Github 部署静态博客</title>
+      <link>https://hrz-gh.github.io/blog/posts/hugo-&#43;-github-%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</link>
+      <pubDate>Sat, 16 Dec 2023 16:15:30 +0800</pubDate>
+      
+      <guid>https://hrz-gh.github.io/blog/posts/hugo-&#43;-github-%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</guid>
+      <description>PS：越来越废物了，不每周记点东西，迟早要痴呆，第一篇就随手记下搭建过程</description>
+      
+    </item>
+    
   </channel>
 </rss>

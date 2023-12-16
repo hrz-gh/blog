@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="scroll-smooth" data-default-appearance="light"
+  data-auto-appearance="true"><head>
+  <meta charset="utf-8" />
+  
+  <meta http-equiv="content-language" content="en" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  
+  <title>远程环境搭建 &middot; 混日子ing</title>
+  <meta name="title" content="远程环境搭建 &middot; 混日子ing" />
+  
+  
+  
+  
+  
+  <link rel="canonical" href="https://hrz-gh.github.io/blog/posts/%E8%BF%9C%E7%A8%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" />
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <link type="text/css" rel="stylesheet" href="/blog/css/main.bundle.min.21596d17b8ce1e02472733031cbeb6f837b40a091942f3d76f4883c5ad0911303372527f3c731b86c8db813ed76ae5a2ad180b64bc7b1227d681969efdf1ddb0.css"
+    integrity="sha512-IVltF7jOHgJHJzMDHL62&#43;De0CgkZQvPXb0iDxa0JETAzclJ/PHMbhsjbgT7XauWirRgLZLx7EifWgZae/fHdsA==" />
+  
+  
+  <script type="text/javascript" src="/blog/js/appearance.min.cd9f9776639958530668ef95bdcb135cc25d054d0602992241cd8e6b51e4329c9c85e3ee490fe231093dc89af06987d3876a7d54f4bae9c8ce03190ee528a55d.js"
+    integrity="sha512-zZ&#43;XdmOZWFMGaO&#43;VvcsTXMJdBU0GApkiQc2Oa1HkMpychePuSQ/iMQk9yJrwaYfTh2p9VPS66cjOAxkO5SilXQ=="></script>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script defer type="text/javascript" id="script-bundle" src="/blog/js/main.bundle.min.2769a33afc8d86261986d437c1a384197d667f66de429409203e373d04017ccb6c7ec1041088722e2f1412bea25099b099ca7ed53a5a5a1f73439448c5d1563e.js"
+    integrity="sha512-J2mjOvyNhiYZhtQ3waOEGX1mf2beQpQJID43PQQBfMtsfsEEEIhyLi8UEr6iUJmwmcp&#43;1TpaWh9zQ5RIxdFWPg==" data-copy="" data-copied=""></script>
+  
+  
+  <script src="/blog/js/zoom.min.js"></script>
+  
+  
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/favicon-16x16.png" />
+  <link rel="manifest" href="/blog/site.webmanifest" />
+  
+  
+  
+  
+  
+  
+  
+  <meta property="og:title" content="远程环境搭建" />
+<meta property="og:description" content="在踩完wsl2，mac mini的坑后，搞了一个ubuntu的mini主机，作为编译与部署服务器，由于桌面空间有限，只接网线与电源，日常使用ssh与samba就够用了，不过某些应用需要在图形界面下进行测试，专门购入一个毫米波的无线触屏显示器，无奈干扰和发热严重，最后还是选择使用远程桌面（在这个万物互联理念都推出了这么久了，还在用最古老的方法。。。心累" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://hrz-gh.github.io/blog/posts/%E8%BF%9C%E7%A8%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-12-23T16:59:34+08:00" />
+<meta property="article:modified_time" content="2023-12-23T16:59:34+08:00" /><meta property="og:site_name" content="混日子ing" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="远程环境搭建"/>
+<meta name="twitter:description" content="在踩完wsl2，mac mini的坑后，搞了一个ubuntu的mini主机，作为编译与部署服务器，由于桌面空间有限，只接网线与电源，日常使用ssh与samba就够用了，不过某些应用需要在图形界面下进行测试，专门购入一个毫米波的无线触屏显示器，无奈干扰和发热严重，最后还是选择使用远程桌面（在这个万物互联理念都推出了这么久了，还在用最古老的方法。。。心累"/>
+
+  
+  <script type="application/ld+json">
+  [{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "articleSection": "Posts",
+    "name": "远程环境搭建",
+    "headline": "远程环境搭建",
+    
+    "abstract": "在踩完wsl2，mac mini的坑后，搞了一个ubuntu的mini主机，作为编译与部署服务器，由于桌面空间有限，只接网线与电源，日常使用ssh与samba就够用了，不过某些应用需要在图形界面下进行测试，专门购入一个毫米波的无线触屏显示器，无奈干扰和发热严重，最后还是选择使用远程桌面（在这个万物互联理念都推出了这么久了，还在用最古老的方法。。。心累",
+    "inLanguage": "en",
+    "url" : "https:\/\/hrz-gh.github.io\/blog\/posts\/%E8%BF%9C%E7%A8%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA\/",
+    "author" : {
+      "@type": "Person",
+      "name": "hrz"
+    },
+    "copyrightYear": "2023",
+    "dateCreated": "2023-12-23T16:59:34\u002b08:00",
+    "datePublished": "2023-12-23T16:59:34\u002b08:00",
+    
+    "dateModified": "2023-12-23T16:59:34\u002b08:00",
+    
+    
+    
+    "mainEntityOfPage": "true",
+    "wordCount": "81"
+  }]
+  </script>
+
+
+  
+  
+  <meta name="author" content="hrz" />
+  
+  
+  
+  <link href="https://github.com/hrz-gh/" rel="me" />
+  
+  
+  <link href="mailto:hrz_ms@outlook.com" rel="me" />
+  
+  
+  <link href="https://steamcommunity.com/id/mostiray/" rel="me" />
+  
+  
+  <link href="https://hrz-gh.github.io/moments/" rel="me" />
+  
+  
+  
+  
+
+<script src="/blog/lib/jquery/jquery.slim.min.js" integrity=""></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+  <meta name="theme-color"/>
+  
+  
+</head>
+<body
+  class="flex flex-col h-screen px-6 m-auto text-lg leading-7 max-w-7xl bg-neutral text-neutral-900 dark:bg-neutral-800 dark:text-neutral sm:px-14 md:px-24 lg:px-32">
+  <div id="the-top" class="absolute flex self-center">
+    <a class="px-3 py-1 text-sm -translate-y-8 rounded-b-lg bg-primary-200 focus:translate-y-0 dark:bg-neutral-600"
+      href="#main-content"><span
+        class="font-bold text-primary-600 ltr:pr-2 rtl:pl-2 dark:text-primary-400">&darr;</span>Skip to main content</a>
+  </div>
+  
+  
+  <div class="min-h-[148px]"></div>
+<div class="fixed inset-x-0 pl-[24px] pr-[24px]" style="z-index:100">
+  <div id="menu-blur" class="absolute opacity-0 inset-x-0 top-0 h-full single_hero_background nozoom backdrop-blur-2xl shadow-2xl"></div>
+  <div class="relative max-w-[64rem] ml-auto mr-auto">
+    <div style="padding-left:0;padding-right:0;padding-top:2px;padding-bottom:3px"
+    class="main-menu flex items-center justify-between px-4 py-6 sm:px-6 md:justify-start space-x-3">
+    
+    <div class="flex flex-1 items-center justify-between">
+        <nav class="flex space-x-3">
+
+            
+            <a href="/blog/" class="text-base font-medium text-gray-500 hover:text-gray-900">混日子ing</a>
+            
+
+        </nav>
+        <nav class="hidden md:flex items-center space-x-5 md:ml-12 h-12">
+
+            
+            
+            
+  <a href="/blog/posts/"  class="flex items-center">
+    
+    <p class="text-base font-medium text-gray-500 hover:text-gray-900" title="Posts">
+        Blog
+    </p>
+</a>
+
+
+            
+            
+  <a href="https://hrz-gh.github.io/moments/"  target="_blank"  class="flex items-center">
+    
+    <p class="text-base font-medium text-gray-500 hover:text-gray-900" title="">
+        Moments
+    </p>
+</a>
+
+
+            
+            
+
+            
+
+
+            
+            <button id="search-button" aria-label="Search" class="text-base hover:text-primary-600 dark:hover:text-primary-400 h-12"
+                title="">
+                
+
+  <span class="relative block icon">
+    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+
+  </span>
+
+
+            </button>
+            
+
+
+            
+            
+
+        </nav>
+        <div class="flex md:hidden items-center space-x-5 md:ml-12">
+
+            <span></span>
+
+            
+
+
+            
+            <button id="search-button-mobile" aria-label="Search" class="text-base hover:text-primary-600 dark:hover:text-primary-400"
+                title="">
+                
+
+  <span class="relative block icon">
+    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+
+  </span>
+
+
+            </button>
+            
+
+            
+            
+
+        </div>
+    </div>
+    <div class="-my-2 -mr-2 md:hidden">
+
+        <label id="menu-button" for="menu-controller" class="block">
+            <input type="checkbox" id="menu-controller" class="hidden" />
+            
+            <div class="cursor-pointer hover:text-primary-600 dark:hover:text-primary-400">
+                
+
+  <span class="relative block icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 113.7 433.7 128 416 128H32C14.33 128 0 113.7 0 96zM0 256C0 238.3 14.33 224 32 224H416C433.7 224 448 238.3 448 256C448 273.7 433.7 288 416 288H32C14.33 288 0 273.7 0 256zM416 448H32C14.33 448 0 433.7 0 416C0 398.3 14.33 384 32 384H416C433.7 384 448 398.3 448 416C448 433.7 433.7 448 416 448z"/></svg>
+
+  </span>
+
+
+            </div>
+            <div id="menu-wrapper" style="padding-top:5px;"
+                class="fixed inset-0 z-30 invisible w-screen h-screen m-0 overflow-auto transition-opacity opacity-0 cursor-default bg-neutral-100/50 backdrop-blur-sm dark:bg-neutral-900/50">
+                <ul
+                    class="flex space-y-2 mt-3 flex-col items-end w-full px-6 py-6 mx-auto overflow-visible list-none ltr:text-right rtl:text-left max-w-7xl">
+
+                    <li>
+                        <span
+                            class="cursor-pointer inline-block align-text-bottom hover:text-primary-600 dark:hover:text-primary-400">
+
+  <span class="relative block icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+
+  </span>
+
+</span>
+                    </li>
+
+                    
+
+                    
+  <li class="mt-1">
+    <a href="/blog/posts/"  class="flex items-center">
+        
+        <p class="text-bg font-bg text-gray-500 hover:text-gray-900" title="Posts">
+            Blog
+        </p>
+    </a>
+</li>
+
+
+
+                    
+
+                    
+  <li class="mt-1">
+    <a href="https://hrz-gh.github.io/moments/"  target="_blank"  class="flex items-center">
+        
+        <p class="text-bg font-bg text-gray-500 hover:text-gray-900" title="">
+            Moments
+        </p>
+    </a>
+</li>
+
+
+
+                    
+
+                </ul>
+                
+                
+
+            </div>
+        </label>
+    </div>
+</div>
+
+
+
+
+
+  </div>
+</div>
+<script>
+  window.addEventListener('scroll', function (e) {
+    var scroll = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    var background_blur = document.getElementById('menu-blur');
+    background_blur.style.opacity = (scroll / 300);
+  });
+</script>
+
+  
+  <div class="relative flex flex-col grow">
+    <main id="main-content" class="grow">
+      
+
+
+<article>
+  
+  
+  
+  
+  
+  
+
+
+<div id="hero" class="h-[150px] md:h-[200px]"></div>
+
+
+    
+    <div class="fixed inset-x-0 top-0 h-[800px] single_hero_background nozoom"
+    style="background-image:url(/blog/img/iceland_hu3d03a01dcc18bc5be0e67db3d8d209a6_5000159_1200x0_resize_q75_box.jpg);">
+    
+
+
+    <div class="absolute inset-0 bg-gradient-to-t from-neutral dark:from-neutral-800 to-transparent mix-blend-normal">
+    </div>
+    <div
+        class="absolute inset-0 opacity-60 bg-gradient-to-t from-neutral dark:from-neutral-800 to-neutral-100 dark:to-neutral-800 mix-blend-normal">
+    </div>
+</div>
+
+<div id="background-blur" class="fixed opacity-0 inset-x-0 top-0 h-full single_hero_background nozoom backdrop-blur-2xl"></div>
+<script>
+    window.addEventListener('scroll', function (e) {
+        var scroll = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        var background_blur = document.getElementById('background-blur');
+        background_blur.style.opacity = (scroll / 300)
+    });
+</script>
+
+  
+  
+
+  <header id="single_header" class="mt-5 max-w-prose">
+    
+    <ol class="text-sm text-neutral-500 dark:text-neutral-400 print:hidden">
+  
+  
+    
+  
+    
+  
+  <li class="inline hidden">
+    <a
+      class="hover:underline decoration-neutral-300 dark:underline-neutral-600"
+      href="/blog/"
+      >混日子</a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+  
+  <li class="inline ">
+    <a
+      class="hover:underline decoration-neutral-300 dark:underline-neutral-600"
+      href="/blog/posts/"
+      >Posts</a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+  
+  <li class="inline hidden">
+    <a
+      class="hover:underline decoration-neutral-300 dark:underline-neutral-600"
+      href="/blog/posts/%E8%BF%9C%E7%A8%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"
+      >远程环境搭建</a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+</ol>
+
+
+    
+    <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+      远程环境搭建
+    </h1>
+    <div class="mt-1 mb-6 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div style="cursor: default;" class="flex flex-row flex-wrap items-center">
+  
+  
+  <time datetime="2023-12-23 16:59:34 &#43;0800 CST">23 December 2023</time>
+  
+
+  
+  
+</div>
+
+
+
+
+
+<div style="cursor: pointer;" class="flex flex-row flex-wrap items-center">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</div>
+
+
+
+    </div>
+
+    
+    
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+  
+  </header>
+  
+  <section class="flex flex-col max-w-full mt-0 prose dark:prose-invert lg:flex-row">
+    
+     <div
+      class="order-first sm:max-w-prose lg:ml-auto px-0 lg:order-last lg:max-w-xs ltr:lg:pl-8 rtl:lg:pr-8">
+      <div class="toc ltr:pl-5 rtl:pr-5 print:hidden lg:sticky lg:top-[140px]">
+
+         <details open class="mt-0 overflow-hidden rounded-lg ltr:-ml-5 ltr:pl-5 rtl:-mr-5 rtl:pr-5 hidden lg:block">
+  <summary
+    class="block py-1 text-lg font-semibold cursor-pointer bg-neutral-100 text-neutral-800 ltr:-ml-5 ltr:pl-5 rtl:-mr-5 rtl:pr-5 dark:bg-neutral-700 dark:text-neutral-100 lg:hidden">
+    Table of Contents
+  </summary>
+  <div
+    class="min-w-[220px] py-2 border-dotted border-neutral-300 ltr:-ml-5 ltr:border-l ltr:pl-5 rtl:-mr-5 rtl:border-r rtl:pr-5 dark:border-neutral-600">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-window2ubuntu">1. window2ubuntu</a></li>
+    <li><a href="#2-andorid2window">2. andorid2window</a></li>
+    <li><a href="#3-后记">3. 后记</a></li>
+  </ul>
+</nav>
+  </div>
+</details>
+<details class="mt-0 overflow-hidden rounded-lg ltr:-ml-5 ltr:pl-5 rtl:-mr-5 rtl:pr-5 lg:hidden">
+  <summary
+    class="py-1 text-lg font-semibold cursor-pointer bg-neutral-100 text-neutral-800 ltr:-ml-5 ltr:pl-5 rtl:-mr-5 rtl:pr-5 dark:bg-neutral-700 dark:text-neutral-100 lg:hidden">
+    Table of Contents
+  </summary>
+  <div
+    class="py-2 border-dotted border-neutral-300 ltr:-ml-5 ltr:border-l ltr:pl-5 rtl:-mr-5 rtl:border-r rtl:pr-5 dark:border-neutral-600">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-window2ubuntu">1. window2ubuntu</a></li>
+    <li><a href="#2-andorid2window">2. andorid2window</a></li>
+    <li><a href="#3-后记">3. 后记</a></li>
+  </ul>
+</nav>
+  </div>
+</details>
+
+   </div>
+      </div>
+      
+
+      <div class="min-w-0 min-h-0 max-w-fit">
+        
+        
+
+
+        <div class="max-w-prose mb-20">
+          <p>在踩完wsl2，mac mini的坑后，搞了一个ubuntu的mini主机，作为编译与部署服务器，由于桌面空间有限，只接网线与电源，日常使用ssh与samba就够用了，不过某些应用需要在图形界面下进行测试，专门购入一个毫米波的无线触屏显示器，无奈干扰和发热严重，最后还是选择使用远程桌面（在这个万物互联理念都推出了这么久了，还在用最古老的方法。。。心累</p>
+<h2 class="relative group">1. window2ubuntu 
+    <div id="1-window2ubuntu" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#1-window2ubuntu" aria-label="Anchor">#</a>
+    </span>        
+    
+</h2>
+<p>window2ubuntu选择xrdp就行：市面上虽然有更成熟的产品，却基本需要图形界面配置（完美循环依赖</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo apt-get install xrdp
+</code></pre></div><p>在注释文件中添加配置：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="c1">#/etc/xrdp/startwm.sh -&gt; 解决本地登录黑屏</span>
+<span class="nb">unset</span> DBUS_SESSION_BUS_ADDRESS
+<span class="nb">unset</span> XDG_RUNTIME_DIR
+
+<span class="c1">#~/.xsessionrc -&gt; 同步桌面</span>
+<span class="nb">export</span> <span class="nv">GNOME_SHELL_SESSION_MODE</span><span class="o">=</span>ubuntu
+<span class="nb">export</span> <span class="nv">XDG_CURRENT_DESKTOP</span><span class="o">=</span>ubuntu:GNOME
+<span class="nb">export</span> <span class="nv">XDG_CONFIG_DIRS</span><span class="o">=</span>/etc/xdg/xdg-ubuntu:/etc/xdg
+
+<span class="c1"># 减少画面卡顿，作用有限</span>
+<span class="c1">#/etc/xrdp/xrdp.ini</span>
+<span class="nv">tcp_send_buffer_bytes</span><span class="o">=</span><span class="m">4194304</span>
+<span class="nv">tcp_recv_buffer_bytes</span><span class="o">=</span><span class="m">6291456</span>
+
+<span class="c1">#/etc/sysctl.conf</span>
+net.core.rmem_max <span class="o">=</span> <span class="m">12582912</span>
+net.core.wmem_max <span class="o">=</span> <span class="m">8388608</span>
+</code></pre></div><p>最后执行：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo sysctl -p
+sudo systemctl restart xrdp
+</code></pre></div><p>systemctl 管理命令：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo systemctl <span class="nb">enable</span> xrdp.service   <span class="c1"># 开机启动，默认</span>
+sudo systemctl start xrdp.service    <span class="c1"># 启动，安装后自动启动</span>
+sudo systemctl restart xrdp.service  <span class="c1"># 重启</span>
+sudo systemctl stop xrdp.service     <span class="c1"># 关闭</span>
+</code></pre></div><h2 class="relative group">2. andorid2window 
+    <div id="2-andorid2window" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#2-andorid2window" aria-label="Anchor">#</a>
+    </span>        
+    
+</h2>
+<p>玩游戏会有这个需求，目前还没有一个比较舒适的方案，steamlink串流凑合能用</p>
+<h2 class="relative group">3. 后记 
+    <div id="3-后记" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#3-%e5%90%8e%e8%ae%b0" aria-label="Anchor">#</a>
+    </span>        
+    
+</h2>
+<p>这种配置包括但不限于编译工具链，neovim等定制化软件，还是用写一个脚本来一键化配置比较好：<a href="https://github.com/hrz-gh/config-tools"   target="_blank">
+    参考</a></p>
+
+        </div>
+                
+        
+
+        
+
+        
+
+
+<h2 class="mt-8 text-2xl font-extrabold mb-10">Related</h2>
+<section class="w-full grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+  
+  
+
+  <a href="/blog/posts/hugo-&#43;-github-%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/" class="min-w-full">
+    
+    <div class="min-h-full border border-neutral-200 dark:border-neutral-700 border-2 rounded overflow-hidden shadow-2xl relative backdrop-blur">
+
+      <div class="px-6 py-4">
+
+        
+        <div class="font-bold text-xl text-neutral-800 decoration-primary-500 hover:underline hover:underline-offset-2 dark:text-neutral"
+          href="/blog/posts/hugo-&#43;-github-%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/">Hugo + Github 部署静态博客</div>
+        
+
+        <div class="text-sm text-neutral-500 dark:text-neutral-400">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div style="cursor: default;" class="flex flex-row flex-wrap items-center">
+  
+  
+  <time datetime="2023-12-16 16:15:30 &#43;0800 CST">16 December 2023</time>
+  
+
+  
+  
+</div>
+
+
+
+
+
+<div style="cursor: pointer;" class="flex flex-row flex-wrap items-center">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</div>
+
+
+
+        </div>
+
+        
+      </div>
+      <div class="px-6 pt-4 pb-2">
+
+      </div>
+    </div>
+  </a>
+  
+</section>
+
+  
+      </div>
+     
+     <script>
+        var oid = "views_posts\/远程环境搭建.md"
+        var oid_likes = "likes_posts\/远程环境搭建.md"
+      </script>
+      
+      
+      <script type="text/javascript" src="/blog/js/page.min.5324517abf3942a5e12fb1067279ecb9e567b2b2e138bd95925b32ff28dd9144c9749ed04c2c448a7f51e2e3b8ab6351cebe4d2de96c59e36ca33e51da37be4a.js" integrity="sha512-UyRRer85QqXhL7EGcnnsueVnsrLhOL2Vklsy/yjdkUTJdJ7QTCxEin9R4uO4q2NRzr5NLelsWeNsoz5R2je&#43;Sg=="></script>
+  
+    </section>
+  <footer class="pt-8 max-w-prose print:hidden">
+
+    
+  
+    
+    
+    
+    <div class="pt-8">
+      <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+      <div class="flex justify-between pt-3">
+        <span>
+          
+            <a class="flex group mr-3" href="/blog/posts/hugo-&#43;-github-%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/">
+              <span
+                class="mr-3 text-neutral-700 group-hover:text-primary-600 ltr:inline rtl:hidden dark:text-neutral dark:group-hover:text-primary-400"
+                >&larr;</span
+              >
+              <span
+                class="ml-3 text-neutral-700 group-hover:text-primary-600 ltr:hidden rtl:inline dark:text-neutral dark:group-hover:text-primary-400"
+                >&rarr;</span
+              >
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >Hugo + Github 部署静态博客</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2023-12-16 16:15:30 &#43;0800 CST">16 December 2023</time>
+                  
+                </span>
+              </span>
+            </a>
+          
+        </span>
+        <span>
+          
+        </span>
+      </div>
+    </div>
+  
+
+
+    
+  </footer>
+</article>
+
+      <div id="top-scroller" class="pointer-events-none absolute top-[110vh] bottom-0 w-12 ltr:right-0 rtl:left-0">
+  <a href="#the-top"
+    class="pointer-events-auto sticky top-[calc(100vh-5.5rem)] flex h-12 w-12 mb-16 items-center justify-center rounded-full bg-neutral/50 text-xl text-neutral-700 backdrop-blur hover:text-primary-600 dark:bg-neutral-800/50 dark:text-neutral dark:hover:text-primary-400"
+    aria-label="Scroll to top" title="Scroll to top">
+    &uarr;
+  </a>
+</div>
+    </main><footer id="site-footer" class="py-10 print:hidden">
+  
+  
+  <div class="flex items-center justify-between">
+
+    
+    
+
+    
+    
+
+  </div>
+  <script>
+    
+    mediumZoom(document.querySelectorAll("img:not(.nozoom)"), {
+      margin: 24,
+      background: 'rgba(0,0,0,0.5)',
+      scrollOffset: 0,
+    })
+    
+  </script>
+  
+  
+  <script type="text/javascript" src="/blog/js/process.min.e6f8b83d4954ef35ac571571d50867170bee9505dbf4025dd412e1db94658e491c84db93d01b16b142e8b0a4a17dfddc4d170b99be44acfd88fe10ac276d23c8.js" integrity="sha512-5vi4PUlU7zWsVxVx1QhnFwvulQXb9AJd1BLh25RljkkchNuT0BsWsULosKShff3cTRcLmb5ErP2I/hCsJ20jyA=="></script>
+  
+  
+</footer><div
+  id="search-wrapper"
+  class="invisible fixed inset-0 flex h-screen w-screen cursor-default flex-col bg-neutral-500/50 p-4 backdrop-blur-sm dark:bg-neutral-900/50 sm:p-6 md:p-[10vh] lg:p-[12vh]"
+  data-url="https://hrz-gh.github.io/blog/"
+  style="z-index:500"
+>
+  <div
+    id="search-modal"
+    class="flex flex-col w-full max-w-3xl min-h-0 mx-auto border rounded-md shadow-lg top-20 border-neutral-200 bg-neutral dark:border-neutral-700 dark:bg-neutral-800"
+  >
+    <header class="relative z-10 flex items-center justify-between flex-none px-2">
+      <form class="flex items-center flex-auto min-w-0">
+        <div class="flex items-center justify-center w-8 h-8 text-neutral-400">
+          
+
+  <span class="relative block icon">
+    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+
+  </span>
+
+
+        </div>
+        <input
+          type="search"
+          id="search-query"
+          class="flex flex-auto h-12 mx-1 bg-transparent appearance-none focus:outline-dotted focus:outline-2 focus:outline-transparent"
+          placeholder="Search"
+          tabindex="0"
+        />
+      </form>
+      <button
+        id="close-search-button"
+        class="flex items-center justify-center w-8 h-8 text-neutral-700 hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400"
+        title="Close (Esc)"
+      >
+        
+
+  <span class="relative block icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+
+  </span>
+
+
+      </button>
+    </header>
+    <section class="flex-auto px-2 overflow-auto">
+      <ul id="search-results">
+        
+      </ul>
+    </section>
+  </div>
+</div>
+
+  </div>
+</body>
+
+</html>
