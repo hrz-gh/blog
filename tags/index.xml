@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on 不想老年痴呆啊！！！</title>
-    <link>https://your_domain.com/tags/</link>
+    <link>https://hrz-gh.github.io/tags/</link>
     <description>Recent content in Tags on 不想老年痴呆啊！！！</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     
-    <atom:link href="https://your_domain.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://hrz-gh.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
